@@ -110,15 +110,31 @@ namespace ariel
     void Team::attack(Team* enemy) 
     {
         if(enemy == nullptr) { throw invalid_argument("input Enemy cannot be null! \n"); }
-        if(!stillAlive() || !enemy->stillAlive()) {throw runtime_error("Dead team can't attack! \n"); }
-        
+        if(!stillAlive() || !enemy->stillAlive()) //{throw runtime_error("Dead team can't attack! \n"); }
+            return;
         if(!enemy->getLeader()->isAlive()) { enemy->replaceLeader();}
         Character* victim = enemy->chooseVictim(_leader);
         for(auto member : _team)
         {
-            if(!victim->isAlive()) { victim = enemy->chooseVictim(_leader); }
+            if(!victim->isAlive()) 
+            {
+                victim = enemy->chooseVictim(_leader);
+                if(victim == nullptr) { return; } 
+            }
             if(member->isAlive()) 
             {
+                if(dynamic_cast<Cowboy*>(member)) 
+                {
+                    Cowboy* currCowBoy = static_cast<Cowboy*>(member);
+                    if(!currCowBoy->hasBullets()) { currCowBoy->reload(); }
+                    else { currCowBoy->shoot(victim); }
+                } 
+                else if(dynamic_cast<Ninja*>(member)) 
+                {
+                    Ninja* currNinja = static_cast<Ninja*>(member);
+                    if(currNinja->distance(victim) <= 1) { currNinja->slash(victim); }
+                    else { currNinja->slash(victim); }
+                }
                 
             }
         }
