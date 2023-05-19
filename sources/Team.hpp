@@ -24,9 +24,12 @@ namespace ariel
         virtual ~Team();
 
         Character* getLeader() const;
+        void setLeaded(Character*);
+        void replaceLeader();
         std::vector<Character*> getTeam() const;
         virtual void add(Character*);
         virtual void attack(Team*);
+        Character* chooseVictim(Character*);
         int stillAlive() const;
         std::string print() const;
     };
