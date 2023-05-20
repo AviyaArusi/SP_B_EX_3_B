@@ -1,5 +1,11 @@
 {
     "files.associations": {
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "atomic": "cpp",
+        "*.tcc": "cpp",
+        "compare": "cpp",
+        "numeric": "cpp",
+        "sstream": "cpp",
+        "cmath": "cpp"
     }
 }

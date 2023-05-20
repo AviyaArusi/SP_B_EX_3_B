@@ -14,6 +14,7 @@ namespace ariel
             Point _location;
             int _healthPoints;
             std::string _name;
+            bool _isPlay;
             
         public:
             Character (const std::string&, const Point&, int);
@@ -27,6 +28,8 @@ namespace ariel
             Point getLocation() const;
             void setLocation(const Point&);
             int getHealth() const;
+            bool isPlay() const;
+            void setIsPlay(bool);
             bool isAlive() const;
             double distance(const Character*) const;
             void hit(int);

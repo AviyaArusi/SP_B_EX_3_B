@@ -16,10 +16,11 @@ namespace ariel
         return ans;    
     }
 
-    string Point::print() const { cout << "(" << _x << ", " << _y << ")" << endl; }
+    string Point::print() const { return "(" + to_string(_x) + ", " + to_string(_y) + ")"; }
     
     Point Point::moveTowards(const Point& source, const Point& destination, double distance) 
     {
+        if(distance < 0) { throw invalid_argument("distance can't be zero! \n"); }
         double dx = destination.get_x() - source.get_x();
         double dy = destination.get_y() - source.get_y();
         double currentDistance = sqrt(dx * dx + dy * dy);

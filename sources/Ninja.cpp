@@ -20,7 +20,7 @@ namespace ariel
     void Ninja::slash(Character* enemy) 
     {
         if(enemy == nullptr) { throw invalid_argument("Null pointer! \n"); }
-        if(!isAlive()) { throw runtime_error("Dead Ninja can't slash! \n"); }
+        if(!isAlive() || this == enemy) { throw runtime_error("Dead Ninja can't slash! \n"); }
         if(!enemy->isAlive()) { throw runtime_error("Can't slash in a dead enemy! \n"); } 
         
         if(distance(enemy) <= 1) { enemy->hit(40); }

@@ -6,6 +6,8 @@
 #include "TrainedNinja.hpp"
 #include "Cowboy.hpp"
 
+const int  MAX_TEAM_SIZE  = 10;
+
 
 namespace ariel
 {
@@ -17,16 +19,16 @@ namespace ariel
     public:
         Team();  // Default constructor
         Team(Character*);
-        Team(Team&);
+        Team(const Team&);
         Team(Team&&) noexcept;
         Team& operator=(const Team&);
         Team& operator=(Team&&) noexcept;
         virtual ~Team();
 
         Character* getLeader() const;
-        void setLeaded(Character*);
+        void setLeader (Character*);
         void replaceLeader();
-        std::vector<Character*> getTeam() const;
+        std::vector<Character*> &getTeam();
         virtual void add(Character*);
         virtual void attack(Team*);
         Character* chooseVictim(Character*);

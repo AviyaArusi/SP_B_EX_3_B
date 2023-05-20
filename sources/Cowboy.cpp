@@ -13,16 +13,20 @@ namespace ariel
     void Cowboy::shoot(Character* enemy) 
     {
         if(enemy == nullptr) { throw invalid_argument("Can't attack null pointer! \n");}
-        if(!isAlive()) { throw runtime_error("Dead man can't shoot! \n");}
+        if(!isAlive() || this == enemy) { throw runtime_error("Dead man can't shoot! \n");}
         if(!enemy->isAlive()) { throw runtime_error("Can't shoot in a dead man! \n");}
         if(_bullets <= 0) { return;}
         enemy->hit(10);
         _bullets--;
     }
 
-    bool Cowboy::hasBullets() const { return _bullets > 0; }
+    bool Cowboy::hasboolets() const { return _bullets > 0; }
 
-    void Cowboy::reload()  { _bullets = COWBOY_BULLETS; }
+    void Cowboy::reload()  
+    {
+        if(!isAlive()) { throw runtime_error("Dead Coboy can't reload! \n"); }
+        _bullets = COWBOY_BULLETS; 
+    }
 
     string Cowboy::print() const
     {

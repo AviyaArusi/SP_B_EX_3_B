@@ -7,25 +7,27 @@ namespace ariel
     Team::Team(Character* leader) : _leader(leader) 
     {
         if (leader == nullptr) { throw invalid_argument("Input leader cannot be null! \n"); }
+        if(leader->isPlay()) { throw runtime_error("Character can play only in one game is the same time! \n"); }
         add(_leader);
+        leader->setIsPlay(true);
     }
 
     // Define copy constructor
-    Team::Team(Team& other) : _leader(other.getLeader()), _team(other.getTeam()) {}
+    Team::Team(const Team& other) : _leader(other._leader), _team(other._team) {}
     // Define move constructor
-    Team::Team(Team&& other) noexcept : _leader(other.getLeader()), _team(other.getTeam()) {}
+    Team::Team(Team&& other) noexcept : _leader(other._leader), _team(other._team) {}
     // Define copy assignment operator
     Team &Team::operator=(const Team& other) 
     {
-        _leader = other.getLeader();
-        _team = other.getTeam();
+        _leader = other._leader;
+        _team = other._team;
         return (*this);
     }
     // Define move assignment operator
     Team &Team::operator=(Team&& other) noexcept 
     {
-        _leader = other.getLeader();
-        _team = other.getTeam();
+        _leader = other._leader;
+        _team = other._team;
         return (*this);
     }
 
@@ -40,7 +42,7 @@ namespace ariel
 
     Character* Team::getLeader() const { return _leader;}
     
-    void Team::setLeaded(Character* leader)
+    void Team::setLeader(Character* leader)
     {
         if(leader == nullptr) { throw invalid_argument("input Character cannot be null! \n"); }
         _leader = leader;
@@ -67,21 +69,27 @@ namespace ariel
         _leader = newLeader;
     }
     
-    vector<Character*> Team::getTeam() const { return _team;};
+    vector<Character*> &Team::getTeam() { return _team;};
 
     void Team::add(Character* character) 
     {
         if(character == nullptr) { throw invalid_argument("input Character cannot be null! \n"); }
-        if(_team.size() >= 10){ return; }
-        
-        if(dynamic_cast<Cowboy*>(character)) 
+        if(character->isPlay()) { throw runtime_error("Character can play only in one game is the same time! \n"); }
+        if(_team.size() >= MAX_TEAM_SIZE) {throw runtime_error("Team size can't be begger then 10! \n"); }
+        if(character->isAlive() )
         {
-            _team.insert(_team.begin(), static_cast<Cowboy*>(character));
-        } 
-        else if(dynamic_cast<Ninja*>(character)) 
-        {
-            _team.push_back(static_cast<Ninja*>(character));
+            if(dynamic_cast<Cowboy*>(character)) 
+            {
+                _team.insert(_team.begin(), static_cast<Cowboy*>(character));
+            } 
+            else if(dynamic_cast<Ninja*>(character)) 
+            {
+                _team.push_back(static_cast<Ninja*>(character));
+            }
+            character->setIsPlay(true);
         }
+
+        else { throw invalid_argument("invalide argument! \n"); }
     }
 
     Character* Team::chooseVictim(Character* enemyLeader)
@@ -126,14 +134,14 @@ namespace ariel
                 if(dynamic_cast<Cowboy*>(member)) 
                 {
                     Cowboy* currCowBoy = static_cast<Cowboy*>(member);
-                    if(!currCowBoy->hasBullets()) { currCowBoy->reload(); }
+                    if(!currCowBoy->hasboolets()) { currCowBoy->reload(); }
                     else { currCowBoy->shoot(victim); }
                 } 
                 else if(dynamic_cast<Ninja*>(member)) 
                 {
                     Ninja* currNinja = static_cast<Ninja*>(member);
                     if(currNinja->distance(victim) <= 1) { currNinja->slash(victim); }
-                    else { currNinja->slash(victim); }
+                    else { currNinja->move(victim); }
                 }
                 
             }
