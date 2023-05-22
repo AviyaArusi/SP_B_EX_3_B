@@ -20,7 +20,7 @@ double random_float(double min = -100, double max = 100) {
     std::uniform_real_distribution<double> distribution(min, max);
 
     return distribution(generator);
-}
+};
 
 auto create_yninja = [](double x = random_float(), double y = random_float()) {
     return new YoungNinja{"Bob", Point{x, y}};

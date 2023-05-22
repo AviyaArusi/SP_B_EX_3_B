@@ -7,8 +7,8 @@ namespace ariel
     Point::Point() : _x(0), _y(0) {}
     Point::Point(double x, double y) : _x(x), _y(y) {}
 
-    int Point::get_x() const { return _x;}
-    int Point::get_y() const { return _y;}
+    double Point::get_x() const { return _x;}
+    double Point::get_y() const { return _y;}
 
     double Point::distance(const Point &other) const 
     {
@@ -20,21 +20,24 @@ namespace ariel
     
     Point Point::moveTowards(const Point& source, const Point& destination, double distance) 
     {
-        if(distance < 0) { throw invalid_argument("distance can't be zero! \n"); }
-        double dx = destination.get_x() - source.get_x();
-        double dy = destination.get_y() - source.get_y();
+        // cout << source.print() << ", " << destination.print() << ", " << distance << endl;
+        if(distance < 0) { throw invalid_argument("distance can't be less then zero! \n"); }
+        if(distance == 0) { return source; }
+        
+        double dx = destination._x - source._x;
+        double dy = destination._y - source._y;
         double currentDistance = sqrt(dx * dx + dy * dy);
-        if (currentDistance <= distance) 
-        {
-            return destination;
-        } 
+
+        if (currentDistance <= distance) { return destination; } 
         else 
         {
             double ratio = distance / currentDistance;
             double newX = source.get_x() + dx * ratio;
             double newY = source.get_y() + dy * ratio;
             return Point(newX, newY);
+        //     cout << Point(newX, newY).print() << endl;
         } 
+    
     }
 
 

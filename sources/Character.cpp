@@ -57,9 +57,8 @@ namespace ariel
 
     double Character::distance(const Character* other) const 
     {
-        if(other == nullptr) {throw invalid_argument("Input can't be nullptr!\n");}
-        int dis = _location.distance(other->getLocation()); 
-        return dis;
+        if(other == nullptr) { throw invalid_argument("Input can't be nullptr!\n"); } 
+        return _location.distance(other->getLocation());
     }
 
     string Character::print() const 
