@@ -103,7 +103,7 @@ namespace ariel
 
             for (auto member : _team)
             {
-                if (member->isAlive())
+                if (member != nullptr && member->isAlive())
                 {
                     double currDistance = enemyLeader->getLocation().distance(member->getLocation());
                     if (currDistance < minDistance)
@@ -124,6 +124,8 @@ namespace ariel
             if(this == enemy) { throw runtime_error("Team can't attack itself! \n"); }
 
             if(!enemy->getLeader()->isAlive()) { enemy->replaceLeader();}
+            if(!_leader->isAlive()) { replaceLeader(); }
+            
             Character* victim = enemy->chooseVictim(_leader);
             
             for(auto member : _team)
@@ -143,18 +145,20 @@ namespace ariel
                     if(dynamic_cast<Cowboy*>(member)) 
                     {
                         Cowboy* currCowBoy = static_cast<Cowboy*>(member);
+                                                
                         if(currCowBoy->hasboolets()) { currCowBoy->shoot(victim); }
                         else { currCowBoy->reload(); }
                     } 
                     else if(dynamic_cast<Ninja*>(member)) 
                     {
                         Ninja* currNinja = static_cast<Ninja*>(member);
+                        
                         if(currNinja->distance(victim) <= 1) { currNinja->slash(victim); }
                         else { currNinja->move(victim); }
                     }
                     
                 }
-                // cout << victim->print() << endl;
+                
             }
         }
 

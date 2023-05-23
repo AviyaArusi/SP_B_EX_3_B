@@ -24,7 +24,7 @@ namespace ariel
 
     void Cowboy::reload()  
     {
-        if(!isAlive()) { throw runtime_error("Dead Coboy can't reload! \n"); }
+        if(!isAlive()) { throw runtime_error("Dead Cowboy can't reload! \n"); }
         _bullets = COWBOY_BULLETS; 
     }
 
