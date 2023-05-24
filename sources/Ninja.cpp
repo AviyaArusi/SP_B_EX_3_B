@@ -14,6 +14,7 @@ namespace ariel
         if(enemy == nullptr) { throw invalid_argument("Null pointer! \n"); }
         if(!isAlive()) { throw runtime_error("Dead Ninja can't move! \n"); }
         if(!enemy->isAlive()) { throw runtime_error("Can't move to dead enemy! \n"); }
+        
         setLocation(Point::moveTowards(getLocation(), enemy->getLocation(), _speed) );
     }
 

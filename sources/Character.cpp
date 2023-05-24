@@ -4,7 +4,6 @@ using namespace std;
 
 namespace ariel
 {
-    // Check validation!!
     Character::Character(const std::string& name, const Point& location, int healthPoints) 
     : _name(name), _location(location), _healthPoints(healthPoints) , _isPlay(false) {}
 

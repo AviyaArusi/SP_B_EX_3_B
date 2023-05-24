@@ -20,7 +20,6 @@ namespace ariel
     
     Point Point::moveTowards(const Point& source, const Point& destination, double distance) 
     {
-        // cout << source.print() << ", " << destination.print() << ", " << distance << endl;
         if(distance < 0) { throw invalid_argument("distance can't be less then zero! \n"); }
         if(distance == 0) { return source; }
         
@@ -35,7 +34,6 @@ namespace ariel
             double newX = source.get_x() + dx * ratio;
             double newY = source.get_y() + dy * ratio;
             return Point(newX, newY);
-        //     cout << Point(newX, newY).print() << endl;
         } 
     
     }

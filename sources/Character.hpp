@@ -33,7 +33,7 @@ namespace ariel
             bool isAlive() const;
             double distance(const Character*) const;
             void hit(int);
-            virtual std::string print() const = 0; // Pure virtual function
+            virtual std::string print() const = 0; 
     };
 
 }
