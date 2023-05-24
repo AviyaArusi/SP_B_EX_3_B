@@ -30,6 +30,7 @@ namespace ariel
         void replaceLeader();
         std::vector<Character*> &getTeam();
         virtual void add(Character*);
+        void kill(Character * attacker, Character* victim);
         virtual void attack(Team*);
         Character* chooseVictim(Character*);
         int stillAlive() const;

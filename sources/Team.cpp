@@ -8,6 +8,7 @@ namespace ariel
     {
         if (leader == nullptr) { throw invalid_argument("Input leader cannot be null! \n"); }
         if(leader->isPlay()) { throw runtime_error("Character can play only in one game is the same time! \n"); }
+        
         add(_leader);
         leader->setIsPlay(true);
     }
@@ -47,6 +48,7 @@ namespace ariel
     void Team::setLeader(Character* leader)
     {
         if(leader == nullptr) { throw invalid_argument("input Character cannot be null! \n"); }
+        
         _leader = leader;
     }
 
@@ -77,6 +79,7 @@ namespace ariel
             if(character == nullptr) { throw invalid_argument("input Character cannot be null! \n"); }
             if(character->isPlay()) { throw runtime_error("Character can play only in one game is the same time! \n"); }
             if(_team.size() >= MAX_TEAM_SIZE) {throw runtime_error("Team size can't be begger then 10! \n"); }
+            
             if(character->isAlive() )
             {
                 if(dynamic_cast<Cowboy*>(character)) 
@@ -116,6 +119,23 @@ namespace ariel
             return victim;
         }
 
+        void Team::kill(Character * attacker, Character* victim) 
+        {
+            if(dynamic_cast<Cowboy*>(attacker)) 
+            {
+                Cowboy* currCowBoy = static_cast<Cowboy*>(attacker);
+                                        
+                if(currCowBoy->hasboolets()) { currCowBoy->shoot(victim); }
+                else { currCowBoy->reload(); }
+            } 
+            else if(dynamic_cast<Ninja*>(attacker)) 
+            {
+                Ninja* currNinja = static_cast<Ninja*>(attacker);
+                
+                if(currNinja->distance(victim) <= 1) { currNinja->slash(victim); }
+                else { currNinja->move(victim); }
+            }
+        }
 
         void Team::attack(Team* enemy) 
         {
@@ -142,21 +162,7 @@ namespace ariel
                 
                 if(member->isAlive()) 
                 {
-                    if(dynamic_cast<Cowboy*>(member)) 
-                    {
-                        Cowboy* currCowBoy = static_cast<Cowboy*>(member);
-                                                
-                        if(currCowBoy->hasboolets()) { currCowBoy->shoot(victim); }
-                        else { currCowBoy->reload(); }
-                    } 
-                    else if(dynamic_cast<Ninja*>(member)) 
-                    {
-                        Ninja* currNinja = static_cast<Ninja*>(member);
-                        
-                        if(currNinja->distance(victim) <= 1) { currNinja->slash(victim); }
-                        else { currNinja->move(victim); }
-                    }
-                    
+                    kill(member, victim);                    
                 }
                 
             }
