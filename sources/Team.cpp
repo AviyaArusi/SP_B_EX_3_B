@@ -20,6 +20,8 @@ namespace ariel
     // Define copy assignment operator
     Team &Team::operator=(const Team& other) 
     {
+        if (this == &other) { return *this; }
+        
         _leader = other._leader;
         _team = other._team;
         return (*this);
@@ -27,6 +29,8 @@ namespace ariel
     // Define move assignment operator
     Team &Team::operator=(Team&& other) noexcept 
     {
+        if (this == &other) { return *this; }
+        
         _leader = other._leader;
         _team = other._team;
         return (*this);
